@@ -1,0 +1,7 @@
+[user]
+	name = Alec Hoey
+	email = ahoey@swiftype.com
+[push]
+	default = simple
+[core]
+	editor = vim
