@@ -9,6 +9,9 @@ syntax enable
 " ensure ftdetect et al work by including this after the Vundle stuff
 filetype plugin indent on
 
+" bind \ (backward slash) to grep shortcut
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
 set backspace=2                                              " Fix broken backspace in some setups
@@ -33,9 +36,12 @@ set scrolloff=3                                              " show context abov
 set showcmd
 set showmatch                                                " show matching brackets when text indicator is over them
 set smartcase                                                " case-sensitive search if any caps
+set ttyfast
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list,full
+set visualbell
 
 " Enable basic mouse behavior such as resizing buffers.
 set mouse=a
@@ -60,6 +66,10 @@ nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap <leader>c <Plug>Kwbd
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" bind \ to Ag command
+nnoremap \ :Ag<SPACE>
 noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " in case you forgot to sudo
@@ -68,11 +78,14 @@ cnoremap w!! %!sudo tee > /dev/null %
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
+let g:NERDTreeShowHidden=1
 let g:gitgutter_enabled = 0
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
   \ }
+let g:airline_powerline_fonts = 1
+
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
@@ -80,13 +93,14 @@ let g:ctrlp_custom_ignore = {
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  " let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
 endif
 
 " fdoc is yaml
