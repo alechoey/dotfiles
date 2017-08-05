@@ -41,7 +41,6 @@ set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 set wildmenu                                                 " show a navigable menu for tab completion
 set wildmode=longest,list,full
-set visualbell
 
 " Enable basic mouse behavior such as resizing buffers.
 set mouse=a

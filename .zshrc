@@ -3,7 +3,7 @@ export TERM="xterm-256color"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/ahoey/.oh-my-zsh
+export ZSH=/Users/alechoey/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -155,7 +155,7 @@ alias gpf='git push --force-with-lease'
 alias ls='ls -a'
 alias -g grn='grep -rn --color '
 
-export NVM_DIR="/Users/ahoey/.nvm"
+export NVM_DIR="/Users/alechoey/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -164,5 +164,3 @@ export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
-
-source "$HOME/.localrc"
