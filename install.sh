@@ -10,6 +10,7 @@ HOMEBREW_PACKAGES=(
   'tmux'
   'reattach-to-user-namespace'
   'zsh'
+  'jenv'
 )
 
 declare -A VIM_PACKAGE_REMOTES
@@ -92,7 +93,9 @@ backup_dotfile() {
 
 link_dotfile() {
   filename=$1
-  ln -s "$SCRIPT_PATH/$filename"
+  target="$HOME/$filename"
+  echo "Linking $SCRIPT_PATH/$filename to $target"
+  ln -s "$SCRIPT_PATH/$filename" $target
 }
 
 
@@ -106,6 +109,7 @@ case $1 in
     ;;
 esac
 
+export PATH=/usr/local/bin:$PATH
 which -s brew
 if [[ $? != 0 ]];
 then
@@ -114,10 +118,25 @@ then
     echo 'Would have installed brew, but --dry-run was enabled'
   else
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    PATH=/usr/local/bin:$PATH
   fi
 else
   echo 'brew already installed; skipping'
+fi
+
+if brew ls --versions zsh > /dev/null;
+then
+  echo 'zsh already installed; not installing oh-my-zsh'
+else
+  if $DRY_RUN;
+  then
+    echo 'Would have installed oh-my-zsh, but --dry-run was enabled'
+  else
+    powerline_path = "$HOME/Downloads/Inconsolata-dz for Powerline.otf"
+    curl -L 'https://github.com/powerline/fonts/raw/master/InconsolataDz/Inconsolata-dz%20for%20Powerline.otf' > $powerline_path
+    open $powerline_path
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+  fi
 fi
 
 # Install all homebrew packages
@@ -130,6 +149,8 @@ done
 mkdir -p "$HOME/.vim/bundle"
 
 # Install all vim packages
+mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 for package_name in  "${!VIM_PACKAGE_REMOTES[@]}"
 do
   install_vim_package $package_name
