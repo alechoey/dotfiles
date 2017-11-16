@@ -131,9 +131,7 @@ else
   then
     echo 'Would have installed oh-my-zsh, but --dry-run was enabled'
   else
-    powerline_path = "$HOME/Downloads/Inconsolata-dz for Powerline.otf"
-    curl -L 'https://github.com/powerline/fonts/raw/master/InconsolataDz/Inconsolata-dz%20for%20Powerline.otf' > $powerline_path
-    open $powerline_path
+    open "$SCRIPT_PATH/Inconsolata-dz for Powerline Nerd Font Complete.otf"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
   fi
