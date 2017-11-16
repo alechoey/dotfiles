@@ -1,10 +1,10 @@
 #! /usr/local/bin/bash
-
 pushd `dirname $0` > /dev/null
 SCRIPT_PATH=`pwd`
 popd > /dev/null
 
 HOMEBREW_PACKAGES=(
+  'bash'
   'git'
   'vim'
   'tmux'
@@ -114,6 +114,7 @@ then
     echo 'Would have installed brew, but --dry-run was enabled'
   else
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    PATH=/usr/local/bin:$PATH
   fi
 else
   echo 'brew already installed; skipping'
