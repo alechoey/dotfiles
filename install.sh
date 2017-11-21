@@ -11,6 +11,7 @@ HOMEBREW_PACKAGES=(
   'reattach-to-user-namespace'
   'zsh'
   'jenv'
+  'the_silver_searcher'
 )
 
 declare -A VIM_PACKAGE_REMOTES
