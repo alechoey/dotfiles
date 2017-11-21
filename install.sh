@@ -12,6 +12,8 @@ HOMEBREW_PACKAGES=(
   'zsh'
   'jenv'
   'the_silver_searcher'
+  'ruby-build'
+  'rbenv'
 )
 
 declare -A VIM_PACKAGE_REMOTES
