@@ -11,6 +11,9 @@ HOMEBREW_PACKAGES=(
   'reattach-to-user-namespace'
   'zsh'
   'jenv'
+  'the_silver_searcher'
+  'ruby-build'
+  'rbenv'
 )
 
 declare -A VIM_PACKAGE_REMOTES
@@ -164,3 +167,4 @@ link_and_backup_dotfile '.tmux.conf'
 link_and_backup_dotfile '.vim'
 link_and_backup_dotfile '.vimrc'
 link_and_backup_dotfile '.zshrc'
+link_and_backup_dotfile '.localrc'
