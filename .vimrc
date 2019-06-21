@@ -1,6 +1,8 @@
 " don't bother with vi compatibility
 set nocompatible
 
+set rtp+=/usr/local/opt/fzf
+
 execute pathogen#infect()
 
 " enable syntax highlighting
@@ -8,6 +10,7 @@ syntax enable
 
 " ensure ftdetect et al work by including this after the Vundle stuff
 filetype plugin indent on
+packadd! matchit
 
 " bind \ (backward slash) to grep shortcut
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
@@ -56,11 +59,8 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <leader>l :Align
 nnoremap <leader>a :Ag<space>
-nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
-nnoremap <leader>t :CtrlP<CR>
-nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader><space> :call whitespace#strip_trailing()<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
@@ -74,15 +74,17 @@ noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo '
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
 
+" disable visual bell
+
+set noeb vb t_vb=
+if has("gui_running")
+  set vb t_vb=
+endif
+
 " plugin settings
-let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
 let g:NERDTreeShowHidden=1
 let g:gitgutter_enabled = 0
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ }
 let g:airline_powerline_fonts = 1
 
 """"""""""""""""""""""""""""""
@@ -92,14 +94,12 @@ let g:airline_powerline_fonts = 1
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
+" If installed using Homebrew
+nnoremap <C-p> :Files<CR>
+
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  " let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
 endif
 
 " fdoc is yaml

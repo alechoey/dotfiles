@@ -28,7 +28,7 @@ POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
 POWERLEVEL9K_VCS_SHOW_SUBMODULE_DIRTY=false
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon vi_mode dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status custom_show_spotify rbenv battery time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status rbenv battery time)
 
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %r}"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
@@ -43,13 +43,13 @@ POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND='green'
 POWERLEVEL9K_BATTERY_DISCONNECTED_COLOR='white'
 
 prompt_zsh_show_spotify() {
-  state=`osascript -e 'tell application "Spotify" to player state as string'`;
-  if [ $state = "playing" ]; then
-    artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
-    track=`osascript -e 'tell application "Spotify" to name of current track as string'`;
+    state=`osascript -e 'tell application "Spotify" to player state as string'`;
+    if [ $state = "playing" ]; then
+        artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
+        track=`osascript -e 'tell application "Spotify" to name of current track as string'`;
 
-    echo -n "$artist - $track \uf04b ";
-  fi
+        echo -n "$artist - $track \uf04b ";
+    fi
 }
 
 POWERLEVEL9K_CUSTOM_SHOW_SPOTIFY="prompt_zsh_show_spotify"
@@ -102,18 +102,17 @@ export KEYTIMEOUT=1
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  bundler
-  common-aliases
-  git
-  git-extras
-  npm
-  osx
-  rails
-  rbenv
-  rfind
-  ssh-agent
-  tmux
-  vi-mode
+    common-aliases
+    git
+    git-extras
+    npm
+    osx
+    rails
+    rbenv
+    rfind
+    ssh-agent
+    tmux
+    vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -154,6 +153,7 @@ alias grc='git rebase --continue'
 alias gp='git push'
 alias gpf='git push --force-with-lease'
 alias ls='ls -a'
+alias be='bundle exec'
 alias -g grn='grep -rn --color '
 
 export NVM_DIR="/Users/alechoey/.nvm"
@@ -167,5 +167,13 @@ export PATH="/usr/local/sbin:$PATH"
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
 
 source "$HOME/.localrc"
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
 export PATH="$HOME/.yarn/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
+fi

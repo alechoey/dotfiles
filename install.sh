@@ -14,18 +14,22 @@ HOMEBREW_PACKAGES=(
   'the_silver_searcher'
   'ruby-build'
   'rbenv'
+  'fzf'
 )
 
 declare -A VIM_PACKAGE_REMOTES
 VIM_PACKAGE_REMOTES=(
-  [vim-colors-solarized]='git@github.com:altercation/vim-colors-solarized.git'
-  [supertab]='git@github.com:ervandew/supertab.git'
   [ctrlp.vim]='git@github.com:kien/ctrlp.vim.git'
+  [fzf.vim]='git@github.com:junegunn/fzf.vim.git'
   [nerdtree]='git@github.com:scrooloose/nerdtree.git'
-  [vim-fugitive]='git@github.com:tpope/vim-fugitive.git'
-  [vim-unimpaired]='git@github.com:tpope/vim-unimpaired.git'
-  [vim-airline]='git@github.com:vim-airline/vim-airline.git'
+  [supertab]='git@github.com:ervandew/supertab.git'
+  [typescript-vim]='git@github.com:leafgarland/typescript-vim.git'
   [vim-airline-themes]='git@github.com:vim-airline/vim-airline-themes.git'
+  [vim-airline]='git@github.com:vim-airline/vim-airline.git'
+  [vim-colors-solarized]='git@github.com:altercation/vim-colors-solarized.git'
+  [vim-fugitive]='git@github.com:tpope/vim-fugitive.git'
+  [vim-ruby]='git@github.com:vim-ruby/vim-ruby.git'
+  [vim-unimpaired]='git@github.com:tpope/vim-unimpaired.git'
 )
 
 install_brew_package() {
@@ -105,12 +109,14 @@ link_dotfile() {
 DRY_RUN=false
 OPTS=`getopt -o d: --long dry-run -n 'install.sh' --"$@"`
 
-case $1 in
-  -d|--dry-run)
-    DRY_RUN=true; shift;;
-  *)
-    ;;
-esac
+while [ "$1" != "" ]; do
+  case $1 in
+    -d|--dry-run)
+      DRY_RUN=true; shift;;
+    *)
+      ;;
+  esac
+done
 
 export PATH=/usr/local/bin:$PATH
 which -s brew
